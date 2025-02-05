@@ -1,36 +1,55 @@
-# Kaleido Auto Bot 🤖
-THIS IS BETA VERSION SO MAYBE WORK OR MAYBE NOT BECAUSE SERVER IS LAGGY
+# Kaleido Mining Bot GUI
 
-## Register
-- https://kaleidofinance.xyz/testnet?ref=ZXTAEAVF
+这是一个用于Kaleido Finance Network的量子挖矿机器人图形界面程序。它提供了简单易用的界面来管理多个钱包的挖矿操作。
 
-## 🌟 Features
+## 功能特点
 
-- **Multi-Wallet Mining Support**: Manage multiple wallets simultaneously.
-- **Real-Time Earnings Dashboard**: Track your earnings in real-time.
-- **Automatic Pending → Paid Conversion**: Automatically convert pending earnings to paid balance.
-- **Quantum Hash Algorithm Implementation**: Optimized for quantum mining.
-- **Auto-Retry with Exponential Backoff**: Handle network issues gracefully.
-- **Detailed Mining Statistics & Analytics**: Get insights into your mining performance.
-- **Cross-Platform Compatibility**: Works on Windows, macOS, and Linux.
+- 支持多钱包管理
+- 实时监控挖矿状态
+- 一键启动/停止所有钱包
+- 可视化的效率和收益展示
+- 本地保存钱包配置
 
-## 🚀 Installation
+## 系统要求
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/airdropinsiders/KaleidoFinance-Auto-Bot.git
-   cd KaleidoFinance-Auto-Bot
-   ```
-2. Install dependencies:
+- Node.js >= 18.0.0
+- Windows 10/11 或 macOS 或 Linux
+
+## 安装步骤
+
+1. 克隆或下载本项目
+2. 在项目目录下运行以下命令安装依赖：
    ```bash
    npm install
    ```
-3. Create a wallets.txt file and add your wallet addresses (one per line):
+
+## 使用方法
+
+1. 启动程序：
    ```bash
-   nano wallets.txt
-   ```
-4. Run Bot
-   ```bash
-   npm run start
+   npm start
    ```
 
+2. 添加钱包：
+   - 点击"添加钱包"按钮
+   - 输入EVM钱包地址（以0x开头）
+   - 点击确认添加
+
+3. 管理挖矿：
+   - 单个钱包：点击对应钱包的"启动"/"停止"按钮
+   - 所有钱包：使用界面顶部的"一键启动"/"一键停止"按钮
+
+4. 监控状态：
+   - 在右侧面板可以查看每个钱包的实时状态
+   - 包括算力、收益、运行时间等信息
+
+## 注意事项
+
+- 请确保添加的钱包地址格式正确
+- 程序会自动保存已添加的钱包列表
+- 关闭程序前请先停止所有正在运行的挖矿任务
+
+## 技术支持
+
+如有问题，请通过以下渠道联系我们：
+- Telegram: https://t.me/AirdropInsiderID 

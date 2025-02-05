@@ -1,12 +1,7 @@
-// miner.js
-import axios from 'axios'
-import { EventEmitter } from 'events'
-import * as fs from 'fs/promises'
-import { dirname, join } from 'path'
-import { fileURLToPath } from 'url'
-import {displayBanner} from './banner.js';
+const axios = require('axios');
+const { EventEmitter } = require('events');
 
-export class KaleidoMiningBot extends EventEmitter {
+class KaleidoMiningBot extends EventEmitter {
     constructor(wallet, botIndex) {
         super();
         this.wallet = wallet;
@@ -124,7 +119,8 @@ export class KaleidoMiningBot extends EventEmitter {
             pendingRewards: this.currentEarnings.pending.toFixed(8),
             uptime: `${Math.floor(uptime / 3600)}h ${Math.floor((uptime % 3600) / 60)}m`,
             efficiency: this.stats.efficiency,
-            isActive: this.miningState.isActive
+            isActive: this.miningState.isActive,
+            startTime: this.miningState.startTime
         });
     }
 
@@ -143,58 +139,4 @@ export class KaleidoMiningBot extends EventEmitter {
     }
 }
 
-export class MiningCoordinator {
-    constructor() {
-        this.bots = [];
-        this.totalPaid = 0;
-    }
-
-    async loadWallets() {
-        try {
-          const __dirname = dirname(fileURLToPath(import.meta.url));
-            const data = await fs.readFile(join(__dirname, 'wallets.txt'), 'utf8');
-            return data.split('\n')
-                .map(line => line.trim())
-                .filter(line => line.startsWith('0x'));
-        } catch (error) {
-            console.error('Error loading wallets:', error.message);
-            return [];
-        }
-    }
-
-    async start() {
-        displayBanner();
-        const wallets = await this.loadWallets();
-        
-        if (wallets.length === 0) {
-            console.log(chalk.red('No valid wallets found in wallets.txt'));
-            return;
-        }
-
-        console.log(chalk.blue(`Loaded ${wallets.length} wallets\n`));
-
-        // Initialize all bots
-        this.bots = wallets.map((wallet, index) => {
-            const bot = new KaleidoMiningBot(wallet, index + 1);
-            bot.initialize();
-            return bot;
-        });
-
-        // Handle shutdown
-        process.on('SIGINT', async () => {
-            console.log(chalk.yellow('\nShutting down miners...'));
-            this.totalPaid = (await Promise.all(this.bots.map(bot => bot.stop())))
-                .reduce((sum, paid) => sum + paid, 0);
-            
-            console.log(chalk.green(`
-            === Final Summary ===
-            Total Wallets: ${this.bots.length}
-            Total Paid: ${this.totalPaid.toFixed(8)} KLDO
-            `));
-            process.exit();
-        });
-    }
-}
-
-// Start mining operation
-new MiningCoordinator().start().catch(console.error);
+module.exports = { KaleidoMiningBot }; 
